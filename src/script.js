@@ -217,9 +217,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // recherche de chemin plus court
   minimisation.addEventListener("click", function () {
-    const container = document.getElementById("steps-element-max");
-    if (container.children.length > 0) {
-      container.style.display = "none";
+    const containerMax = document.getElementById("steps-element-max");
+    const containerMin = document.getElementById("steps-element-min");
+    if (!areAllMarked(graphMin)) {
+      while (containerMin.hasChildNodes()) {
+        containerMin.removeChild(containerMin.firstChild);
+      }
+    }
+
+    if (containerMax.children.length > 0) {
+      containerMax.style.display = "none";
       document.getElementById("steps-element-min").style.display = "block";
     }
 
@@ -233,10 +240,17 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   maximisation.addEventListener("click", function () {
-    const container = document.getElementById("steps-element-min");
-    if (container.children.length > 0) {
-      container.style.display = "none";
-      document.getElementById("steps-element-max").style.display = "block";
+    const containerMax = document.getElementById("steps-element-max");
+    const containerMin = document.getElementById("steps-element-min");
+    if (!areAllMarked(graphMax)) {
+      while (containerMax.hasChildNodes()) {
+        containerMax.removeChild(containerMax.firstChild);
+      }
+    }
+
+    if (containerMin.children.length > 0) {
+      containerMin.style.display = "none";
+      containerMax.style.display = "block";
     }
 
     const inputStart = start.value;
@@ -364,7 +378,6 @@ const dantzigMin = (graph, start, end) => {
     markedHtml.innerHTML = `E<sub>${i + 1}</sub> = {${marked.join(", ")}}<h4>`;
     markedHtml.style.fontWeight = "bold";
     markedHtml.style.fontSize = "20px";
-    container.appendChild(markedHtml);
 
     tempVal = [];
     document.getElementById("steps-element-min").appendChild(container);
@@ -469,7 +482,6 @@ const dantzigMax = (graph, start, end) => {
     markedHtml.innerHTML = `E<sub>${i + 1}</sub> = {${marked.join(", ")}}<h4>`;
     markedHtml.style.fontWeight = "bold";
     markedHtml.style.fontSize = "20px";
-    container.appendChild(markedHtml);
 
     tempVal = [];
     document.getElementById("steps-element-max").appendChild(container);
